@@ -1,11 +1,6 @@
 <template>
   <div class="wrapper">
-    <div
-      class="container quiz-intro passcode"
-      data-aos="fade-up"
-      data-aos-delay="60"
-      data-aos-duration="1000"
-    >
+    <div class="container quiz-intro passcode">
       <div class="row">
         <div class="col-lg-5 order-12">
           <img
@@ -36,13 +31,23 @@
             <form>
               <input
                 id="frmpass"
+                ref="frmpass"
                 type="password"
                 placeholder="Enter Passcode"
               />
-              <div id="pass-invalid-feedback" class="invalid-feedback">
+              <div
+                id="pass-invalid-feedback"
+                class="invalid-feedback"
+                v-show="isInvalid"
+              >
                 Incorrect Password.
               </div>
-              <button type="submit" id="pass-submit" class="bttn">
+              <button
+                type="submit"
+                @click.prevent="setCookie()"
+                id="pass-submit"
+                class="bttn"
+              >
                 Submit
               </button>
             </form>
@@ -55,6 +60,11 @@
 <script>
 import { createSEOMeta } from '~/utils/seo'
 export default {
+  data() {
+    return {
+      isInvalid: false,
+    }
+  },
   head() {
     const title = 'Broker Passcode - Brandman Health Plan'
 
@@ -65,6 +75,18 @@ export default {
         url: this.$nuxt.$route.path,
       }),
     }
+  },
+  methods: {
+    setCookie: function () {
+      let pass = this.$refs.frmpass.value
+      if (pass == 'bhp') {
+        this.isInvalid = false
+        sessionStorage.setItem('crtAuth', true)
+        window.location.replace('/broker-training')
+      } else {
+        this.isInvalid = true
+      }
+    },
   },
 }
 </script>

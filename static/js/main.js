@@ -1,102 +1,14 @@
-// Open external links in a popup modal notice
-// $(window).on('load', function () {
-//   $.expr[':'].external = function (a) {
-//     var linkhn = a.hostname.split('.').reverse()
-//     var linkHref = linkhn[1] + '.' + linkhn[0]
-
-//     var domainhn = window.location.hostname.split('.').reverse()
-//     var domainHref = domainhn[1] + '.' + domainhn[0]
-
-//     return (
-//       !a.href.match(/^mailto\:/) &&
-//       !a.href.match(/^tel\:/) &&
-//       linkHref !== domainHref
-//     )
-//   }
-
-// $('a:external').addClass('ext_link')
-
-//   $(function () {
-//     // $('body').on('click', 'a.ext_link', function () {
-//     //   // open a modal
-//     //   $('#speedbump').modal('show')
-//     //   //go to link on modal close
-//     //   var url = $(this).attr('href')
-//     //   $('body').on('click', '.btn-modal.btn-continue', function () {
-//     //     window.open(url)
-//     //     $('.btn-modal.btn-continue').off()
-//     //   })
-//     //   $('body').on('click', '.btn-modal.btn-close', function () {
-//     //     $('#speedbump').modal('hide')
-//     //     $('.btn-modal.btn-close').off()
-//     //   })
-//     // })
-//   })
-// });
-(function ($) {
-  $(document).on('click', '#dl_close', function (event) {
-    event.preventDefault()
-    let dlUrl = $(this).attr('href')
-    window.open(dlUrl)
-    $('#download').modal('hide')
-  })
-  var $root = $('html, body')
-  $('.download-training').click(function (event) {
-    let dlUrl = $(this).attr('href')
-    $('#dl_close').attr('href', dlUrl)
-  })
-
-  var $root = $('html, body')
-
-  $(
-    'a[href*=\\#]:not([href=\\#]):not([data-toggle="collapse"]):not([data-lity])'
-  ).click(function () {
-    $root.animate(
-      {
-        scrollTop: $($.attr(this, 'href')).offset().top,
-      },
-      500
-    )
-
-    return false
-  })
-
-  $('.programs.alt .inner-left a:not(.link)').click(function () {
-    $('.show').addClass('act')
-    return false
-  })
-
+;(function ($) {
+  // Need to replace mobile nav functionality
   $('.navbar-toggler').click(function () {
     $('body').toggleClass('nav-act')
-  })
-
-  $('.text-size-small').click(function () {
-    $('body').addClass('font-small')
-    $('body').removeClass('font-big')
-    return false
-  })
-
-  $('.text-size-normal').click(function () {
-    $('body').removeClass('font-small')
-    $('body').removeClass('font-big')
-    return false
-  })
-
-  $('.text-size-big').click(function () {
-    $('body').removeClass('font-small')
-    $('body').addClass('font-big')
-    return false
-  })
-
-  $('.select-lang').click(function () {
-    $('.drop').removeClass('act')
-    $(this).parent().parent().find('.drop').addClass('act')
   })
 
   $('.drop-close').click(function () {
     $(this).parent().parent().removeClass('act')
   })
 
+  // need to replicate Quiz functionality, grecaptcha submit and custom upload buttons on /borker-training
   $('#step-two-submit').click(function (e) {
     e.preventDefault()
     if (!$('#step-two-form')[0].checkValidity()) {
@@ -116,22 +28,6 @@
   $('.quiz-cbox input').click(function () {
     el = $(this)
     markAnswer(el)
-  })
-
-  $('#printcert').click(function (event) {
-    event.preventDefault()
-    window.print()
-  })
-
-  $('#pass-submit').click(function (event) {
-    event.preventDefault()
-    if ($('#frmpass').val() == 'bhp') {
-      $('#pass-invalid-feedback').hide()
-      sessionStorage.setItem('crtAuth', true)
-      window.location.replace('/broker-training')
-    } else {
-      $('#pass-invalid-feedback').fadeIn()
-    }
   })
 
   const answers = {

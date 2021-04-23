@@ -225,7 +225,7 @@
                 life.
               </p>
 
-              <div class="show">
+              <div v-show="planAbout">
                 <p>
                   Each program includes dedicated care managers who help our
                   members get the right care at the right time. Care managers
@@ -236,12 +236,14 @@
                   loved ones and on activities they enjoy.
                 </p>
 
-                <a href="#" class="link"
+                <a href="#contact" class="link"
                   >Learn More <i class="fas fa-angle-right"></i
                 ></a>
               </div>
 
-              <a href="#">Read More <i class="fas fa-angle-down"></i></a>
+              <a href="#" @click.prevent="planAbout = true"
+                >Read More <i class="fas fa-angle-down"></i
+              ></a>
             </div>
           </div>
 
@@ -400,6 +402,11 @@
 <script>
 import { createSEOMeta } from '~/utils/seo'
 export default {
+  data() {
+    return {
+      planAbout: false,
+    }
+  },
   head() {
     const title = 'About - Brandman Health Plan'
 

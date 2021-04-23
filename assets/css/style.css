@@ -12,6 +12,10 @@ body {
   font-weight: 500;
 }
 
+.error {
+  color: red;
+}
+
 a,
 a:hover,
 button,
@@ -1464,8 +1468,8 @@ body.font-big .intro p {
 .button-file-upload .button-file-upload-text {
   color: #000;
   float: left;
-  font-size: 12px;
-  line-height: 3;
+  font-size: 1rem;
+  line-height: 2;
 }
 
 .quiz-section {
@@ -2824,6 +2828,9 @@ ul.nav li.dropdown .dropdown-item {
   margin-top: -5px;
   margin-right: 3px;
   width: 18px;
+}
+#pass-invalid-feedback {
+  display: block;
 }
 
 #download .modal-content {

@@ -35,7 +35,11 @@
               </p>
             </div>
 
-            <a href="#" id="printcert" class="bttn bttn-blue px-4"
+            <a
+              href="#"
+              @click.prevent="printCert()"
+              id="printcert"
+              class="bttn bttn-blue px-4"
               ><i class="fas fa-print mr-2"></i> Print</a
             >
           </div>
@@ -67,6 +71,7 @@ export default {
   },
   methods: {
     pageData: function () {
+      console.log('aoky')
       let auth = sessionStorage.getItem('crtAuth')
       if (auth) {
         this.crtName = sessionStorage.getItem('crtName')
@@ -75,9 +80,12 @@ export default {
         window.location.replace('/broker-passcode')
       }
     },
-    Mounted() {
-      this.pageData()
+    printCert: function () {
+      window.print()
     },
+  },
+  mounted() {
+    this.pageData()
   },
 }
 </script>

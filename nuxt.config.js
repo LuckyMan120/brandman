@@ -83,7 +83,17 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    // recaptcha
+    '@nuxtjs/recaptcha',
   ],
+
+  recaptcha: {
+    siteKey: '6LdOhtYZAAAAAPU83iQ5OZZbnSJoy-oUAJTN8_7b',
+    version: 3,
+    hideBadge: true,
+    language: 'v3',
+    size: 'normal',
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

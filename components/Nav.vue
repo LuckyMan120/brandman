@@ -93,9 +93,9 @@
             href="tel:1-888-697-5662"
             ><strong>1-888-697-5662</strong><i class="fas fa-phone-alt"></i
           ></a>
-          <a class="text-size-small">A</a>
-          <a class="text-size-normal">A</a>
-          <a class="text-size-big">A</a>
+          <a class="text-size-small" @click="updateFontSize('font-small')">A</a>
+          <a class="text-size-normal" @click="updateFontSize('')">A</a>
+          <a class="text-size-big" @click="updateFontSize('font-big')">A</a>
         </div>
       </div>
     </nav>
@@ -172,6 +172,14 @@ export default {
       if (!this.modalFlag) {
         this.modalFlag = true
         this.redirecURL = link
+      }
+    },
+    updateFontSize: function (fontClass) {
+      const el = document.body
+      el.classList.remove('font-small')
+      el.classList.remove('font-big')
+      if (fontClass != '') {
+        el.classList.add(fontClass)
       }
     },
   },

@@ -328,79 +328,13 @@
           </div>
       </div> -->
 
-    <div
-      class="contact text-center"
-      id="contact"
-      data-aos="fade-up"
-      data-aos-delay="60"
-      data-aos-duration="1000"
-    >
-      <div class="container">
-        <h3>Experience Our Difference</h3>
-        <p>
-          <b
-            >Interested in joining the Brandman family?<br />Call
-            <a href="tel:888-697-5662">888-697-5662 TTY/TDD 711</a></b
-          >
-          <br />Or use the form below to start the conversation.
-        </p>
-
-        <form
-          action="https://getform.io/f/67ecfa79-4f20-4165-bd19-014688d4f10e"
-          method="POST"
-        >
-          <input name="Name" type="text" placeholder="Your Name*" />
-          <input name="Email" type="email" placeholder="Email Address*" />
-          <input name="Phone" type="text" placeholder="Phone Number" />
-          <select name="Interested In">
-            <option value="">I’m interested in*</option>
-            <option value="Enrolling">Enrolling in Brandman Health Plan</option>
-            <option value="In-home Visit">
-              Requesting an in-home visit with a certified insurance agent
-            </option>
-            <option value="Questions about Brandman">
-              Asking questions about Brandman Health Plan
-            </option>
-            <option value="Other">Other</option>
-          </select>
-          <textarea
-            name="Message"
-            placeholder="Message or Questions"
-          ></textarea>
-          <div class="custom-control custom-checkbox">
-            <input type="hidden" name="Contact Me" value="No" /><input
-              type="checkbox"
-              class="custom-control-input"
-              id="customCheck"
-              name="Contact Me"
-              value="Yes"
-            />
-            <label class="custom-control-label" for="customCheck"
-              >Contact me with more information or enrollment assistance.</label
-            >
-          </div>
-          <p>
-            Checking confirms that: I am interested in more information about
-            Brandman Health Plan, a Health Maintenance Organization that
-            contracts with Medicare. I am asking for a plan representative or
-            licensed agent to contact me. I understand that I am under no
-            obligation to enroll. I understand that if I choose to enroll with
-            Brandman Health, the plan representative or licensed agent may
-            receive compensation for assisting me.
-          </p>
-          <div
-            class="g-recaptcha"
-            data-sitekey="6LehWj8aAAAAALSxwXaGf_ugskK7KDHuuqJ6MaCp"
-          ></div>
-          <button type="submit" class="bttn">Submit</button>
-        </form>
-      </div>
-    </div>
+    <ContactForm />
   </div>
 </template>
 
 <script>
 import { createSEOMeta } from '~/utils/seo'
+import ContactForm from '~/components/ContactForm.vue'
 export default {
   data() {
     return {
@@ -418,5 +352,8 @@ export default {
       }),
     }
   },
+  components: {
+    ContactForm,
+  },
 }
-</script>    
+</script>

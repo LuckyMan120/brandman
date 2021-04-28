@@ -28,9 +28,21 @@
     >
       <div class="container">
         <ul>
-          <li><a href="#1">Online Search &amp; Enrollment Tools</a></li>
-          <li><a href="#contact">Order Pre-Enrollment Kits</a></li>
-          <li><a href="#3">Download Pre-Enrollment Kits</a></li>
+          <li>
+            <a @click.prevent="scrollToSection('1')"
+              >Online Search &amp; Enrollment Tools</a
+            >
+          </li>
+          <li>
+            <a @click.prevent="scrollToSection('contact')"
+              >Order Pre-Enrollment Kits</a
+            >
+          </li>
+          <li>
+            <a @click.prevent="scrollToSection('3')"
+              >Download Pre-Enrollment Kits</a
+            >
+          </li>
         </ul>
       </div>
     </div>
@@ -451,6 +463,12 @@ export default {
         url: this.$nuxt.$route.path,
       }),
     }
+  },
+  methods: {
+    scrollToSection: function (sectionID) {
+      let element = document.getElementById(sectionID)
+      element.scrollIntoView({ behavior: 'smooth' })
+    },
   },
 }
 </script>

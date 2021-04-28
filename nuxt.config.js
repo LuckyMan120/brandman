@@ -36,6 +36,7 @@ export default {
         href:
           'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css',
       },
+      { rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Nunito+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" }
     ],
     script: [
       { src: '/js/jquery.min.js', defer: true },
@@ -85,6 +86,8 @@ export default {
     '@nuxt/content',
     // recaptcha
     '@nuxtjs/recaptcha',
+    // toast
+    "@nuxtjs/toast",
   ],
 
   recaptcha: {
@@ -93,6 +96,23 @@ export default {
     hideBadge: true,
     language: 'v3',
     size: 'normal',
+  },
+
+  // toast
+  toast: {
+    position: "bottom-right",
+    theme: "outline",
+    duration: 5000,
+    register: [
+      // Register custom toasts
+      {
+        name: "my-error",
+        message: "Oops...Something went wrong",
+        options: {
+          type: "error"
+        }
+      }
+    ]
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

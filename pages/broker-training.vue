@@ -52,7 +52,7 @@
         <div class="contact">
           <div class="quiz-form text-center">
             <p>All fields and uploads are required in order to take the quiz.</p>
-            <form id="step-two-form" action="https://getform.io/f/1a79aeec-d8c1-4bab-b5d8-710d1363d348" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+            <form id="step-two-form" action="https://getform.io/f/1a79aeec-d8c1-4bab-b5d8-710d1363d348" method="POST" accept-charset="UTF-8">
               <input type="text" v-model="frmname" name="Name" placeholder="First and Last Name*" required>
               <input type="text" v-model="frmlicense" name="License" placeholder="License Number*" required>
               <input type="text" v-model="frmagency" name="Agency" placeholder="Agency or FMO Name*" required>
@@ -214,7 +214,7 @@
                 <li><div><input @click="chooseAnswer(10, $event.target)" type="radio" value="$100" name="question-10"><span>$100</span></div></li>
                 <li><div><input @click="chooseAnswer(10, $event.target)" type="radio" value="$150" name="question-10"><span>$150</span></div></li>
                 <li><div><input @click="chooseAnswer(10, $event.target)" type="radio" value="$125" name="question-10"><span>$125</span></div></li>
-                <li v-if="answerTrueFlags[9]"><em class="correct answer">Correct! Move on to the next question.</em></li>
+                <li v-if="answerTrueFlags[9]"><em class="correct answer">Correct!</em></li>
                 <li v-if="answerFalseFlags[9]"><em class="wrong answer">Sorry, that answer is not correct, please try again by clicking on a different answer.</em></li>
               </ul>			
             </div>
@@ -282,14 +282,35 @@ export default {
         'marked-10': 0,
       },
       submitFlag: false,
-      answerTrueFlags: [false, false, false, false, false, false, false, false, false, false],
-      answerFalseFlags: [false, false, false, false, false, false, false, false, false, false],
+      answerTrueFlags: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
+      answerFalseFlags: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
       firstUploadName: '',
       secondUploadName: '',
     }
   },
   async mounted() {
-    console.log(this.$refs.threeStep)
     try {
       await this.$recaptcha.init()
     } catch (e) {
@@ -305,66 +326,36 @@ export default {
     },
     onsubmitStepTwo: function () {
       // validate
-      if (this.frmname.length === 0 ||
-      this.frmlicense.length === 0 ||
-      this.frmagency.length === 0 ||
-      this.frmproducer.length === 0 ||
-      this.frmphone.length === 0 ||
-      this.frmemail.length === 0 ||
-      this.file1 === null ||
-      this.file2 === null) {
+      if (
+        this.frmname.length === 0 ||
+        this.frmlicense.length === 0 ||
+        this.frmagency.length === 0 ||
+        this.frmproducer.length === 0 ||
+        this.frmphone.length === 0 ||
+        this.frmemail.length === 0 ||
+        this.file1 === null ||
+        this.file2 === null
+      ) {
         this.showValidFlag = true
-        return;
+        this.$toast.error('You must fill out all fields...')
+        return
       }
 
-      const el = this.$refs.threeStep;
+      const el = this.$refs.threeStep
 
       if (el) {
         // Use el.scrollIntoView() to instantly scroll to the element
-        el.scrollIntoView({behavior: 'smooth'});
+        el.scrollIntoView({ behavior: 'smooth' })
         this.threeStepFlag = true
       }
-
     },
     onFileChangeOne: function (e) {
       this.firstUploadName = e.target.files[0].name
-      let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) {
-          return;
-      }
-      this.createImageOne(files[0]);
-    },
-    createImageOne: function(file) {
-      /* eslint-disable no-undef */
-      let reader = new FileReader();
-      let vm = this;
-      reader.onload = (e) => {
-          let image = e.target.result;
-          let data = {};
-          data['file'] = image;
-          vm.file1 = data
-      };
-      reader.readAsDataURL(file);
+      this.file1 = e.target.files[0]
     },
     onFileChangeTwo: function (e) {
       this.secondUploadName = e.target.files[0].name
-      let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) {
-          return;
-      }
-      this.createImageTwo(files[0]);
-    },
-    createImageTwo: function(file) {
-      /* eslint-disable no-undef */
-      let reader = new FileReader();
-      let vm = this;
-      reader.onload = (e) => {
-          let image = e.target.result;
-          let data = {};
-          data['file'] = image;
-          vm.file2 = data
-      };
-      reader.readAsDataURL(file);
+      this.file2 = e.target.files[0]
     },
     chooseAnswer: function (step, el) {
       let total = 0
@@ -374,11 +365,13 @@ export default {
       let falseTemp = [...this.answerFalseFlags]
 
       // check it is correct answer
-      if (el.value === this.answers[question]) { // true answer
+      if (el.value === this.answers[question]) {
+        // true answer
         this.answered[marked] = 1
         trueTemp[step - 1] = true
         falseTemp[step - 1] = false
-      } else { // wrong answer
+      } else {
+        // wrong answer
         this.answered[marked] = 0
         trueTemp[step - 1] = false
         falseTemp[step - 1] = true
@@ -395,38 +388,47 @@ export default {
       this.answerTrueFlags = trueTemp
       this.answerFalseFlags = falseTemp
     },
-    onSubmit:async function () {
+    onSubmit: async function () {
       let name = this.frmname
       let agency = this.frmagency
       try {
         const token = await this.$recaptcha.execute('login')
+        const formData = new FormData()
+        formData.append('Name', this.frmname)
+        formData.append('License', this.frmlicense)
+        formData.append('Agency', this.frmagency)
+        formData.append('Producer_Num', this.frmproducer)
+        formData.append('Phone', this.frmphone)
+        formData.append('Email', this.frmemail)
+        formData.append('License File', this.file1)
+        formData.append('AHIP Certification', this.file2)
+        formData.append('g-recaptcha-response', token)
 
-        let data = {
-          'frmname': this.frmname,
-          'frmlicense': this.frmlicense,
-          'frmagency': this.frmagency,
-          'frmproducer': this.frmproducer,
-          'frmphone': this.frmphone,
-          'frmemail': this.frmemail,
-          'file1': this.file1,
-          'file2': this.file2,
-          'g-recaptcha-response': token
-        }
+        this.$toast.info('Submitting Data. Just a moment...')
 
         // submit
-        this.$axios.post("https://getform.io/f/1a79aeec-d8c1-4bab-b5d8-710d1363d348", data, {
-          headers: {
-            Accept: "application/json"
-          }
-        }).then(() => {
-          sessionStorage.setItem('crtName', name)
-          sessionStorage.setItem('crtAgency', agency)
+        this.$axios
+          .post(
+            'https://getform.io/f/1a79aeec-d8c1-4bab-b5d8-710d1363d348',
+            formData,
+            {
+              headers: {
+                Accept: 'application/json',
+              },
+              dataType: 'json',
+              contentType: 'multipart/form-data',
+            }
+          )
+          .then(() => {
+            sessionStorage.setItem('crtName', name)
+            sessionStorage.setItem('crtAgency', agency)
 
-          // go to broker confirmation
-          this.$router.push({name: 'broker-confirmation'})
-        }).catch(error => {
-          console.log('An error occurred: ' + error)
-        })
+            // go to broker confirmation
+            this.$router.push({ name: 'broker-confirmation' })
+          })
+          .catch((error) => {
+            console.log('An error occurred: ' + error)
+          })
 
         // send token to server alongside your form data
 
@@ -435,7 +437,7 @@ export default {
       } catch (error) {
         console.log('Login error:', error)
       }
-    }
+    },
   },
   beforeMount() {
     this.checkAuth()
@@ -465,6 +467,6 @@ export default {
     file2: function () {
       this.showValidFlag = false
     },
-  }
+  },
 }
 </script>

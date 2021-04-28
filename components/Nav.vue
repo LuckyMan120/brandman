@@ -87,15 +87,23 @@
             </li>
           </ul>
         </div>
-        <div class="d-flex align-items-center header-right">
+        <div class="align-items-center header-right d-md-flex">
           <a
             class="d-flex flex-row-reverse align-items-center nav-phone"
             href="tel:1-888-697-5662"
             ><strong>1-888-697-5662</strong><i class="fas fa-phone-alt"></i
           ></a>
-          <a class="text-size-small" @click="updateFontSize('font-small')">A</a>
-          <a class="text-size-normal" @click="updateFontSize('')">A</a>
-          <a class="text-size-big" @click="updateFontSize('font-big')">A</a>
+          <a
+            class="d-md-none text-size-small"
+            @click="updateFontSize('font-small')"
+            >A</a
+          >
+          <a class="d-md-none text-size-normal" @click="updateFontSize('')"
+            >A</a
+          >
+          <a class="d-md-none text-size-big" @click="updateFontSize('font-big')"
+            >A</a
+          >
         </div>
       </div>
     </nav>
